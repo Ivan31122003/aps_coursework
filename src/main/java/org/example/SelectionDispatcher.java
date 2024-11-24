@@ -1,20 +1,13 @@
 package org.example;
 
 public class SelectionDispatcher {
-    private final Integer devicesNumber;
-    private Pointers pointers;
-    private Integer deviceHeadPointer = 0;
-    private Integer deviceTailPointer = 0;
+    private final Buffer buffer;
 
-    public SelectionDispatcher(Integer devicesNumber, Pointers pointers) {
-        this.devicesNumber = devicesNumber;
-        this.pointers = pointers;
+    public SelectionDispatcher(Buffer buffer) {
+        this.buffer = buffer;
     }
 
     public Request takeRequest() {
-        if (pointers.getTailPointer().equals(pointers.getHeadPointer())) {
-            return false;
-        }
-        return ;
+        return buffer.take();
     }
 }
