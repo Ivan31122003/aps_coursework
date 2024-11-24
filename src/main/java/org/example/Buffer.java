@@ -1,22 +1,29 @@
 package org.example;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Buffer {
-    private List<Request> requests;
+    private final BlockingQueue<Request> requests;
 
     public Buffer(Integer capacity) {
-        requests = new ArrayList<>(capacity);
-        for (int i = 0; i < capacity; i++) {
-            requests.add(null);
+        this.requests = new ArrayBlockingQueue<>(capacity);
+    }
+
+    public boolean put(Request request) {
+            if (!requests.offer(request)) {
+                System.out.println("Отказ: очередь переполнена. Заявка с ID " + request.getId() + " отклонена");
+                return false;
+            }
+            return true;
+    }
+
+    public Request take() {
+        try {
+            return requests.take();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null;
         }
-    }
-
-    public void put(Integer index, Request request) {
-        requests.set(index, request);
-    }
-
-    public Request take(Integer index) {
-        return requests.get(index);
     }
 }
