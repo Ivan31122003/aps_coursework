@@ -10,7 +10,7 @@ public class Main {
             Thread.currentThread().interrupt();
         }
 
-        Queue queue = new Queue(3);
+        Queue queue = new Queue(2);
         queue.formingRequests();
     }
 }

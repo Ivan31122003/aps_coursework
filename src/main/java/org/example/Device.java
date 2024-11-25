@@ -4,8 +4,6 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Platform;
-
 
 public class Device implements Runnable {
     private static List<Device> devices = new ArrayList<>();
@@ -13,10 +11,11 @@ public class Device implements Runnable {
     private static SelectionDispatcher selectionDispatcher;
 
     private final Integer id;
-    private final IntegerProperty requestsCounter = new SimpleIntegerProperty(0);
     private final IntegerProperty workTime = new SimpleIntegerProperty(0);
+    private LongProperty idleTime = new SimpleLongProperty(0);
+    private final IntegerProperty requestsCounter = new SimpleIntegerProperty(0);
     private final DoubleProperty averageTimeOfExecuting = new SimpleDoubleProperty(0.0);
-    private final IntegerProperty status = new SimpleIntegerProperty(0);
+    private final StringProperty status = new SimpleStringProperty("Простой");
 
     public Device() {
         this.id = generateId();
@@ -37,26 +36,26 @@ public class Device implements Runnable {
 
     @Override
     public void run() {
+        long idleStartTime = 0;
+        long idleEndTime = 0;
         try {
             while (true) {
+                idleStartTime = System.currentTimeMillis();
                 Request request = selectionDispatcher.takeRequest();
-                status.set(1);
-                System.out.println("Device " + id + " execute:\n" + "Request Id: " + request.getId() + "\nExecuting time: " + request.getExecutingTime() + "\n");
-                Thread.sleep(request.getExecutingTime());
-                processRequest(request);
+                idleEndTime = System.currentTimeMillis();
+                idleTime.set(idleTime.get() + idleEndTime - idleStartTime);
 
+                status.set("Занят");
+                Thread.sleep(request.getExecutingTime());
+
+                status.set("Простой");
                 requestsCounter.set(requestsCounter.get() + 1);
                 workTime.set(workTime.get() + request.getExecutingTime());
                 averageTimeOfExecuting.set((double) workTime.get() / requestsCounter.get());
-                status.set(0);
             }
         } catch (Throwable e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    private void processRequest(Request request) {
-        System.out.println("Device " + id + " processing request: " + request.getId());
     }
 
     public Integer getId() {
@@ -87,11 +86,19 @@ public class Device implements Runnable {
         return averageTimeOfExecuting;
     }
 
-    public int getStatus() {
+    public long getIdleTime() {
+        return idleTime.get();
+    }
+
+    public LongProperty idleTimeProperty() {
+        return idleTime;
+    }
+
+    public String getStatus() {
         return status.get();
     }
 
-    public IntegerProperty statusProperty() {
+    public StringProperty statusProperty() {
         return status;
     }
 }
