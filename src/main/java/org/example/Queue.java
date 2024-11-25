@@ -27,11 +27,10 @@ public class Queue {
         new Thread(device2).start();
         new Thread(device3).start();
 
-        for (int i = 0; i < 10; ++i) {
-            Request request = new Request();
-            requestsDispatcher.putRequest(request);
+        for (int i = 0; i < 100; ++i) {
+            requestsDispatcher.putRequest(new Request());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.err.println("Thread was interrupted during sleep: " + e.getMessage());
