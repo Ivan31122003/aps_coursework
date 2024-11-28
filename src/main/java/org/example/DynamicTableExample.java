@@ -8,23 +8,37 @@ import javafx.stage.Stage;
 
 public class DynamicTableExample extends Application {
 
-    private static DynamicTable<Device> dynamicTable;
+    private static DynamicTable<Device> dynamicTableDevices;
+    private static DynamicTable<Source> dynamicTableSource;
 
     @Override
     public void start(Stage primaryStage) {
-        dynamicTable = new DynamicTable<>();
-        dynamicTable.generateColumns(Device.class);
+        // Таблица устройств
+        dynamicTableDevices = new DynamicTable<>();
+        dynamicTableDevices.generateColumns(Device.class);
 
-        VBox vbox = new VBox(dynamicTable.getTableView());
-        Scene scene = new Scene(vbox, 600, 400);
+        // Таблица источников
+        dynamicTableSource = new DynamicTable<>();
+        dynamicTableSource.generateColumns(Source.class);
 
+        // Контейнер для обеих таблиц
+        VBox vbox = new VBox(10,
+                dynamicTableDevices.getTableView(),
+                dynamicTableSource.getTableView()
+        );
+
+        Scene scene = new Scene(vbox, 600, 800);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Devices");
+        primaryStage.setTitle("Devices and Sources");
         primaryStage.show();
     }
 
-    public static void addDevice(Device device) {
-        Platform.runLater(() -> dynamicTable.setData(Device.getDevices()));
+    public static void addDevices(Devices devices) {
+        Platform.runLater(() -> dynamicTableDevices.setData(devices.getDevices()));
+    }
+
+    public static void addSources(Sources sources) {
+        Platform.runLater(() -> dynamicTableSource.setData(sources.getSources()));
     }
 
     public static void main(String[] args) {

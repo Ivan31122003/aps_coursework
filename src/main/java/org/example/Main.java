@@ -2,6 +2,7 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
+
         new Thread(() -> DynamicTableExample.main(args)).start();
 
         try {
@@ -10,7 +11,11 @@ public class Main {
             Thread.currentThread().interrupt();
         }
 
-        Queue queue = new Queue(2);
-        queue.formingRequests();
+        Integer totalRequests = 20;
+        Smo smo = new Smo(3, 3, totalRequests);
+        Sources sources = new Sources(5, smo.getRequestsDispatcher(), 3500, 1000, totalRequests, 2.0, 5.0);
+
+        smo.runDevices();
+        sources.runSources();
     }
 }
