@@ -1,37 +1,22 @@
 package org.example;
 
 import javafx.beans.property.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Device implements Runnable {
-    private static List<Device> devices = new ArrayList<>();
-    private static Integer idCounter = 1;
-    private static SelectionDispatcher selectionDispatcher;
-
+    private SelectionDispatcher selectionDispatcher;
     private final Integer id;
     private final IntegerProperty workTime = new SimpleIntegerProperty(0);
     private LongProperty idleTime = new SimpleLongProperty(0);
     private final IntegerProperty requestsCounter = new SimpleIntegerProperty(0);
     private final DoubleProperty averageTimeOfExecuting = new SimpleDoubleProperty(0.0);
     private final StringProperty status = new SimpleStringProperty("Простой");
+    private final Devices devices;
 
-    public Device() {
-        this.id = generateId();
-        devices.add(this);
-    }
-
-    public static void setSelectionDispatcher(SelectionDispatcher dispatcher) {
-        selectionDispatcher = dispatcher;
-    }
-
-    private static Integer generateId() {
-        return idCounter++;
-    }
-
-    public static List<Device> getDevices() {
-        return devices;
+    public Device(Integer id, SelectionDispatcher selectionDispatcher, Devices devices) {
+        this.id = id;
+        this.selectionDispatcher = selectionDispatcher;
+        this.devices = devices;
     }
 
     @Override
@@ -39,13 +24,13 @@ public class Device implements Runnable {
         long idleStartTime = 0;
         long idleEndTime = 0;
         try {
-            while (true) {
+            while (devices.incrementCurrentRequestsNumber()) {
                 idleStartTime = System.currentTimeMillis();
                 Request request = selectionDispatcher.takeRequest();
                 idleEndTime = System.currentTimeMillis();
                 idleTime.set(idleTime.get() + idleEndTime - idleStartTime);
 
-                status.set("Занят");
+                status.set(String.format("Занят: Источник № %d; Заявка № %d", request.getSourceId(), request.getId()));
                 Thread.sleep(request.getExecutingTime());
 
                 status.set("Простой");

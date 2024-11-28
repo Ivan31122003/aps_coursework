@@ -1,5 +1,4 @@
 package org.example;
-import javafx.application.Platform;
 
 public class Queue {
     private Buffer buffer;
@@ -10,31 +9,13 @@ public class Queue {
         buffer = new Buffer(capacity);
         requestsDispatcher = new RequestsDispatcher(buffer);
         selectionDispatcher = new SelectionDispatcher(buffer);
-        Device.setSelectionDispatcher(selectionDispatcher);
     }
 
-    public void formingRequests() {
-        Device device1 = new Device();
-        Device device2 = new Device();
-        Device device3 = new Device();
+    public SelectionDispatcher getSelectionDispatcher() {
+        return selectionDispatcher;
+    }
 
-
-        DynamicTableExample.addDevice(device1);
-        DynamicTableExample.addDevice(device2);
-        DynamicTableExample.addDevice(device3);
-
-        new Thread(device1).start();
-        new Thread(device2).start();
-        new Thread(device3).start();
-
-        for (int i = 0; i < 100; ++i) {
-            requestsDispatcher.putRequest(new Request());
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.err.println("Thread was interrupted during sleep: " + e.getMessage());
-            }
-        }
+    public RequestsDispatcher getRequestsDispatcher(){
+        return requestsDispatcher;
     }
 }

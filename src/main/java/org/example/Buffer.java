@@ -12,7 +12,6 @@ public class Buffer {
 
     public boolean put(Request request) {
             if (!requests.offer(request)) {
-                System.out.println("Отказ: очередь переполнена. Заявка с ID " + request.getId() + " отклонена");
                 return false;
             }
             return true;
