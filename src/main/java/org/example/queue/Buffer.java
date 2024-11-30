@@ -1,4 +1,7 @@
-package org.example;
+package org.example.queue;
+
+import org.example.table.DynamicTableExample;
+import org.example.sources.Request;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -8,6 +11,7 @@ public class Buffer {
 
     public Buffer(Integer capacity) {
         this.requests = new ArrayBlockingQueue<>(capacity);
+        DynamicTableExample.startBufferUpdater(this);
     }
 
     public boolean put(Request request) {
@@ -24,5 +28,9 @@ public class Buffer {
             Thread.currentThread().interrupt();
             return null;
         }
+    }
+
+    public BlockingQueue<Request> getRequests() {
+        return requests;
     }
 }

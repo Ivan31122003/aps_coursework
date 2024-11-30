@@ -1,7 +1,8 @@
-package org.example;
+package org.example.devices;
 
 import javafx.beans.property.*;
-import java.util.List;
+import org.example.sources.Request;
+import org.example.queue.SelectionDispatcher;
 
 public class Device implements Runnable {
     private SelectionDispatcher selectionDispatcher;
@@ -32,7 +33,7 @@ public class Device implements Runnable {
 
                 status.set(String.format("Занят: Источник № %d; Заявка № %d", request.getSourceId(), request.getId()));
                 Thread.sleep(request.getExecutingTime());
-
+                request.setTimeInSystem();
                 status.set("Простой");
                 requestsCounter.set(requestsCounter.get() + 1);
                 workTime.set(workTime.get() + request.getExecutingTime());

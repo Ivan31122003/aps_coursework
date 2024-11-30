@@ -1,4 +1,7 @@
-package org.example;
+package org.example.sources;
+
+import org.example.table.DynamicTableExample;
+import org.example.queue.RequestsDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;

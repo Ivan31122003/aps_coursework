@@ -1,4 +1,4 @@
-package org.example;
+package org.example.queue;
 
 public class Queue {
     private Buffer buffer;

@@ -1,7 +1,8 @@
-package org.example;
+package org.example.sources;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import org.example.queue.RequestsDispatcher;
 
 public class Source implements Runnable {
     private static Integer idCounter = 1;

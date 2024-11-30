@@ -1,5 +1,10 @@
 package org.example;
 
+import org.example.devices.Devices;
+import org.example.queue.Queue;
+import org.example.queue.RequestsDispatcher;
+import org.example.table.DynamicTableExample;
+
 public class Smo {
     private Queue queue;
     private Devices devices;

@@ -1,4 +1,6 @@
-package org.example;
+package org.example.devices;
+
+import org.example.queue.SelectionDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
