@@ -1,6 +1,4 @@
-package org.example.devices;
-
-import org.example.queue.SelectionDispatcher;
+package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +39,14 @@ public class Devices {
             return true;
         }
         return false;
+    }
+
+    public Boolean isDevicesIdle() {
+        for (Device device : devices) {
+            if (!device.isIdle()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -1,14 +1,14 @@
-package org.example.sources;
+package org.example;
 
 public class Request {
-    private static Integer idCounter = 1;
-
-    private final Integer sourceId;
     private final Integer id;
+    private final Integer sourceId;
     private final Integer executingTime;
+    private Boolean isRejected = false;
     private final Long startTime;
     private Long timeInSystem;
-    private Boolean isRejected = false;
+
+    private static Integer idCounter = 1;
 
     public Request(Integer sourceId, Double minTime, Double maxTime) {
         this.id = generateId();

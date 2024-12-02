@@ -1,6 +1,4 @@
-package org.example.queue;
-
-import org.example.sources.Request;
+package org.example;
 
 public class RequestsDispatcher {
     private final Buffer buffer;

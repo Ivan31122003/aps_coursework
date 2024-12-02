@@ -1,20 +1,23 @@
-package org.example.sources;
+package org.example;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import org.example.queue.RequestsDispatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Source implements Runnable {
-    private static Integer idCounter = 1;
-
-    private Sources sources;
     private IntegerProperty id = new SimpleIntegerProperty();
-    private RequestsDispatcher requestsDispatcher;
-    private Integer delay;
     private IntegerProperty requestsCount = new SimpleIntegerProperty();
     private IntegerProperty rejectedRequests = new SimpleIntegerProperty();
+    private List<Request> requests = new ArrayList<>();
+    private Sources sources;
+    private RequestsDispatcher requestsDispatcher;
+    private Integer delay;
     private Double minRequestTime;
     private Double maxRequestTime;
+
+    private static Integer idCounter = 1;
 
     public Source(RequestsDispatcher requestsDispatcher, Integer delay, Sources sources, Double minRequestTime, Double maxRequestTime) {
         this.sources = sources;
@@ -34,14 +37,26 @@ public class Source implements Runnable {
         try {
             while (sources.incrementCurrentRequestsNumber()) {
                 Thread.sleep(delay);
-                if(!requestsDispatcher.putRequest(new Request(id.get(), minRequestTime, maxRequestTime))) {
+                requests.add(new Request(id.get(), minRequestTime, maxRequestTime));
+                if(!requestsDispatcher.putRequest(requests.getLast())) {
                     rejectedRequests.set(rejectedRequests.get() + 1);
+                    requests.getLast().setIsRejected();
                 };
                 requestsCount.set(requestsCount.get() + 1);
             }
         } catch (Throwable e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public List<Long> getAverageTimeOfRequestsInSystem() {
+        List<Long> list = new ArrayList<>();
+        for (Request request : requests) {
+            if (!request.getIsRejected()) {
+                list.add(request.getTimeInSystem());
+            }
+        }
+        return list;
     }
 
     public int getId() {

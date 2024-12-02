@@ -1,4 +1,4 @@
-package org.example.table;
+package org.example;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,6 +1,4 @@
-package org.example.queue;
-
-import org.example.sources.Request;
+package org.example;
 
 public class SelectionDispatcher {
     private final Buffer buffer;

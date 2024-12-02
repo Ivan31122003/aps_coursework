@@ -1,16 +1,35 @@
 package org.example;
 
-public class Statistics {
-    private Integer averageTimeOfRequestInSystem = 0;
-    private Integer averageTimeOfDevicesIdle = 0;
-    private Integer averageTimeOfDevicesWork = 0;
-    private Integer rejectedRequests = 0;
-    private Integer allRequests = 0;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
-    public Statistics() {
-        System.out.println("Завершенные/отклоненные: " + (1 - rejectedRequests / allRequests));
-        System.out.println("Среднее время нахождения заявки в системе: ");
-        System.out.println("Среднее рабочее время приборов: ");
-        System.out.println("Среднее время простоя приборов: ");
+public class Statistics {
+    private final Sources sources;
+    private final Smo smo;
+
+    public Statistics(Sources sources, Smo smo) {
+        this.sources = sources;
+        this.smo = smo;
+    }
+
+    public void start() {
+        while(!(sources.isAllRequestGenerated() && smo.isDevicesIdle())){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        List<Long> timeOfRequestsInSystem = sources.getAverageTimeOfRequestsInSystem();
+        Long averageTime = 0L;
+        for (Long time : timeOfRequestsInSystem) {
+            averageTime += time;
+        }
+        averageTime /= timeOfRequestsInSystem.size();
+        Double percent = (double) timeOfRequestsInSystem.size() / (double) sources.getTotalRequests() * 100;
+        percent = (double) (Math.round(percent * 100) / 100);
+        System.out.println("Процент обработанных заявок: " + percent + "%");
+        System.out.println("Среденее время нахождения заявки в системе: " + averageTime);
     }
 }

@@ -1,16 +1,10 @@
-package org.example.table;
+package org.example;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.example.sources.Request;
-import org.example.devices.Device;
-import org.example.devices.Devices;
-import org.example.queue.Buffer;
-import org.example.sources.Source;
-import org.example.sources.Sources;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -34,14 +28,14 @@ public class DynamicTableExample extends Application {
         dynamicTableBuffer.generateColumns(Request.class);
 
         VBox vbox = new VBox(10,
-                dynamicTableDevices.getTableView(),
                 dynamicTableSource.getTableView(),
-                dynamicTableBuffer.getTableView()
-        );
+                dynamicTableBuffer.getTableView(),
+                dynamicTableDevices.getTableView()
+                );
 
-        Scene scene = new Scene(vbox, 600, 1000);
+        Scene scene = new Scene(vbox, 600, 600);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Devices, Sources, and Buffer");
+        primaryStage.setTitle("Sources, Buffer, Devices");
         primaryStage.show();
     }
 

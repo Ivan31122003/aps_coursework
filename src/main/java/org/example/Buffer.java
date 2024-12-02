@@ -1,7 +1,4 @@
-package org.example.queue;
-
-import org.example.table.DynamicTableExample;
-import org.example.sources.Request;
+package org.example;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;

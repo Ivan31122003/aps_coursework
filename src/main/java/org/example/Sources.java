@@ -1,7 +1,4 @@
-package org.example.sources;
-
-import org.example.table.DynamicTableExample;
-import org.example.queue.RequestsDispatcher;
+package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +18,18 @@ public class Sources {
         }
 
         DynamicTableExample.addSources(this);
+    }
+
+    public Integer getTotalRequests() {
+        return totalRequests;
+    }
+
+    public List<Long> getAverageTimeOfRequestsInSystem() {
+        List<Long> list = new ArrayList<>();
+        for (Source source : sources) {
+            list.addAll(source.getAverageTimeOfRequestsInSystem());
+        }
+        return list;
     }
 
     public void runSources() {
@@ -43,5 +52,9 @@ public class Sources {
             return true;
         }
         return false;
+    }
+
+    public Boolean isAllRequestGenerated() {
+        return !(currentRequestsNumber.get() < totalRequests);
     }
 }

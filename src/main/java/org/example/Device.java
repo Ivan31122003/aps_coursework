@@ -1,11 +1,8 @@
-package org.example.devices;
+package org.example;
 
 import javafx.beans.property.*;
-import org.example.sources.Request;
-import org.example.queue.SelectionDispatcher;
 
 public class Device implements Runnable {
-    private SelectionDispatcher selectionDispatcher;
     private final Integer id;
     private final IntegerProperty workTime = new SimpleIntegerProperty(0);
     private LongProperty idleTime = new SimpleLongProperty(0);
@@ -13,6 +10,7 @@ public class Device implements Runnable {
     private final DoubleProperty averageTimeOfExecuting = new SimpleDoubleProperty(0.0);
     private final StringProperty status = new SimpleStringProperty("Простой");
     private final Devices devices;
+    private SelectionDispatcher selectionDispatcher;
 
     public Device(Integer id, SelectionDispatcher selectionDispatcher, Devices devices) {
         this.id = id;
@@ -86,5 +84,9 @@ public class Device implements Runnable {
 
     public StringProperty statusProperty() {
         return status;
+    }
+
+    public Boolean isIdle() {
+        return status.get().equals("Простой");
     }
 }
