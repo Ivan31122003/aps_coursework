@@ -22,6 +22,10 @@ public class Request {
         timeInSystem = endTime - startTime;
     }
 
+    public Long getStartTime() {
+        return startTime;
+    }
+
     public Long getTimeInSystem() {
         return timeInSystem;
     }

@@ -10,11 +10,11 @@ public class Sources {
     private final Integer startDelay;
     private AtomicInteger currentRequestsNumber = new AtomicInteger(0);
 
-    public Sources(Integer sourcesNumber, RequestsDispatcher requestsDispatcher, Integer delay, Integer startDelay, Integer totalRequests, Double minRequestTime, Double maxRequestTime) {
+    public Sources(Integer sourcesNumber, RequestsDispatcher requestsDispatcher, Integer delay, Integer startDelay, Integer totalRequests, Double minRequestTime, Double maxRequestTime, Calendar calendar) {
         this.totalRequests = totalRequests;
         this.startDelay = startDelay;
         for(int i = 0; i < sourcesNumber; ++i) {
-            sources.add(new Source(requestsDispatcher, delay, this, minRequestTime, maxRequestTime));
+            sources.add(new Source(requestsDispatcher, delay, this, minRequestTime, maxRequestTime, calendar));
         }
 
         DynamicTableExample.addSources(this);

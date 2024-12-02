@@ -16,16 +16,18 @@ public class Source implements Runnable {
     private Integer delay;
     private Double minRequestTime;
     private Double maxRequestTime;
+    private Calendar calendar;
 
     private static Integer idCounter = 1;
 
-    public Source(RequestsDispatcher requestsDispatcher, Integer delay, Sources sources, Double minRequestTime, Double maxRequestTime) {
+    public Source(RequestsDispatcher requestsDispatcher, Integer delay, Sources sources, Double minRequestTime, Double maxRequestTime, Calendar calendar) {
         this.sources = sources;
         this.minRequestTime = minRequestTime;
         this.maxRequestTime = maxRequestTime;
         id.set(idCounter++);
         this.requestsDispatcher = requestsDispatcher;
         this.delay = delay;
+        this.calendar = calendar;
     }
 
     public void start() {
@@ -43,6 +45,7 @@ public class Source implements Runnable {
                     requests.getLast().setIsRejected();
                 };
                 requestsCount.set(requestsCount.get() + 1);
+                calendar.setEventRequest(requests.getLast());
             }
         } catch (Throwable e) {
             Thread.currentThread().interrupt();

@@ -18,4 +18,8 @@ public class Queue {
     public RequestsDispatcher getRequestsDispatcher(){
         return requestsDispatcher;
     }
+
+    public Integer getNumberOfElementInBuffer() {
+        return buffer.getNumberOfElements();
+    }
 }

@@ -11,18 +11,23 @@ public class Devices {
     private final Integer totalRequest;
     private AtomicInteger currentRequestsNumber = new AtomicInteger(0);
 
-    public Devices(Integer devicesNumber, SelectionDispatcher selectionDispatcher, Integer totalRequest) {
+    public Devices(Integer devicesNumber, SelectionDispatcher selectionDispatcher, Integer totalRequest, Calendar calendar) {
         this.devicesNumber = devicesNumber;
         this.totalRequest = totalRequest;
         devices = new ArrayList<>(devicesNumber);
         for(int i = 1; i <= devicesNumber; ++i) {
-            devices.add(new Device(i, selectionDispatcher, this));
+            devices.add(new Device(i, selectionDispatcher, this, calendar));
         }
     }
 
     public void runDevices() {
         for(int i = 0; i < devicesNumber; ++i) {
             new Thread(devices.get(i)).start();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

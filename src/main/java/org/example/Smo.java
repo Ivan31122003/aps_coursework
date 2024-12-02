@@ -4,9 +4,9 @@ public class Smo {
     private Queue queue;
     private Devices devices;
 
-    public Smo(Integer bufferCapacity, Integer devicesNumber, Integer totalRequests) {
+    public Smo(Integer bufferCapacity, Integer devicesNumber, Integer totalRequests, Calendar calendar) {
         queue = new Queue(bufferCapacity);
-        devices = new Devices(devicesNumber, queue.getSelectionDispatcher(), totalRequests);
+        devices = new Devices(devicesNumber, queue.getSelectionDispatcher(), totalRequests, calendar);
 
         DynamicTableExample.addDevices(devices);
     }
@@ -29,5 +29,9 @@ public class Smo {
 
     public Double getAverageTimeOfExecutingRequest() {
         return devices.getAverageTimeOfExecutingRequest();
+    }
+
+    public Integer getNumberOfElementsInQueue() {
+        return queue.getNumberOfElementInBuffer();
     }
 }

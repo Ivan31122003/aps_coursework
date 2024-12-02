@@ -27,6 +27,10 @@ public class Buffer {
         }
     }
 
+    public Integer getNumberOfElements() {
+        return requests.size();
+    }
+
     public BlockingQueue<Request> getRequests() {
         return requests;
     }
