@@ -49,4 +49,23 @@ public class Devices {
         }
         return true;
     }
+
+    public Double getWorkload() {
+        Integer workTime = 0;
+        Integer idleTime = 0;
+        for (Device device : devices) {
+            workTime += device.getWorkTime();
+            idleTime += (int) device.getIdleTime();
+        }
+        Double workload = ((double) Math.round(((double) workTime / (workTime + idleTime)) * 1000)) / 10;
+        return workload;
+    }
+
+    public Double getAverageTimeOfExecutingRequest() {
+        Double sumOfAverageTime = 0d;
+        for (Device device : devices) {
+            sumOfAverageTime += device.getAverageTimeOfExecuting();
+        }
+        return ((double) Math.round(sumOfAverageTime / devices.size())) / 1000;
+    }
 }

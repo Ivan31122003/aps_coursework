@@ -22,14 +22,16 @@ public class Statistics {
             }
         }
         List<Long> timeOfRequestsInSystem = sources.getAverageTimeOfRequestsInSystem();
-        Long averageTime = 0L;
+        Double averageTime = 0d;
         for (Long time : timeOfRequestsInSystem) {
             averageTime += time;
         }
         averageTime /= timeOfRequestsInSystem.size();
         Double percent = (double) timeOfRequestsInSystem.size() / (double) sources.getTotalRequests() * 100;
-        percent = (double) (Math.round(percent * 100) / 100);
+        percent = ((double) Math.round(percent * 100)) / 100;
         System.out.println("Процент обработанных заявок: " + percent + "%");
-        System.out.println("Среденее время нахождения заявки в системе: " + averageTime);
+        System.out.println("Среднее время нахождения заявки в системе: " + ((double) Math.round(averageTime)) / 1000);
+        System.out.println("Среднее время обработки заявки: " + smo.getAverageTimeOfExecutingRequest());
+        System.out.println("Загруженность приборов: " + smo.getDevicesWorkload() + "%");
     }
 }

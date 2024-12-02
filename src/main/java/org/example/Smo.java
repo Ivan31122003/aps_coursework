@@ -22,4 +22,12 @@ public class Smo {
     public Boolean isDevicesIdle() {
         return devices.isDevicesIdle();
     }
+
+    public Double getDevicesWorkload() {
+        return devices.getWorkload();
+    }
+
+    public Double getAverageTimeOfExecutingRequest() {
+        return devices.getAverageTimeOfExecutingRequest();
+    }
 }

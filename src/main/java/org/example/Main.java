@@ -11,9 +11,11 @@ public class Main {
             Thread.currentThread().interrupt();
         }
 
-        Integer totalRequests = 13;
-        Smo smo = new Smo(4, 1, totalRequests);
-        Sources sources = new Sources(5, smo.getRequestsDispatcher(), 3500, 1000, totalRequests, 2.0, 5.0);
+        Integer totalRequests = 100;
+        Smo smo = new Smo(7, 7, totalRequests);
+        Sources sources = new Sources(8, smo.getRequestsDispatcher(), 3500, 1000, totalRequests, 2d, 5d);
+//        Sources sources = new Sources(8, smo.getRequestsDispatcher(), 35, 10, totalRequests, 0.02, 0.05);
+
 
         smo.runDevices();
         sources.runSources();
