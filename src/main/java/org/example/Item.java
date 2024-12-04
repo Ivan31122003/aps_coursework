@@ -1,0 +1,50 @@
+package org.example;
+
+public class Item {
+    private static Integer idCounter = 1;
+    private final Integer bufferSize;
+    private final String title;
+    private final Integer id;
+    private final Double time;
+    private final Integer sourceId;
+    private final Integer deviceId;
+    private final Integer requestId;
+
+    public Item(Integer bufferSize, String title, Double time, Integer sourceId, Integer deviceId, Integer requestId) {
+        this.bufferSize = bufferSize;
+        this.title = title;
+        id = idCounter++;
+        this.time = time;
+        this.sourceId = sourceId;
+        this.deviceId = deviceId;
+        this.requestId = requestId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Double getTime() {
+        return time;
+    }
+
+    public Integer getSourceId() {
+        return sourceId;
+    }
+
+    public Integer getDeviceId() {
+        return deviceId;
+    }
+
+    public Integer getRequestId() {
+        return requestId;
+    }
+
+    public Integer getBufferSize() {
+        return bufferSize;
+    }
+}

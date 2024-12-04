@@ -1,8 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Statistics {
     private final Sources sources;
@@ -29,9 +27,9 @@ public class Statistics {
         averageTime /= timeOfRequestsInSystem.size();
         Double percent = (double) timeOfRequestsInSystem.size() / (double) sources.getTotalRequests() * 100;
         percent = ((double) Math.round(percent * 100)) / 100;
-        System.out.println("Процент обработанных заявок: " + percent + "%");
-        System.out.println("Среднее время нахождения заявки в системе: " + ((double) Math.round(averageTime)) / 1000);
-        System.out.println("Среднее время обработки заявки: " + smo.getAverageTimeOfExecutingRequest());
-        System.out.println("Загруженность приборов: " + smo.getDevicesWorkload() + "%");
+//        System.out.println("Процент обработанных заявок: " + percent + "%");
+//        System.out.println("Среднее время нахождения заявки в системе: " + ((double) Math.round(averageTime)) / 1000);
+//        System.out.println("Среднее время обработки заявки: " + smo.getAverageTimeOfExecutingRequest());
+//        System.out.println("Загруженность приборов: " + smo.getDevicesWorkload() + "%");
     }
 }

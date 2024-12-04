@@ -1,5 +1,10 @@
 package org.example;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -12,6 +17,21 @@ public class Main {
         }
 
         Calendar calendar = new Calendar();
+        System.out.println("Нажмите Enter, чтобы вывести следующую информацию:");
+        Thread inputThread = new Thread(() -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+                System.out.println("Нажмите Enter, чтобы вывести информацию:");
+                while (true) {
+                    String input = reader.readLine(); // Ждет ввода
+                    if (input.isEmpty()) { // Если пользователь нажал только Enter
+                        calendar.getStepInfo();
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Ошибка чтения ввода: " + e.getMessage());
+            }
+        });
+        inputThread.start();
 
         Integer totalRequests = 100;
         Smo smo = new Smo(1, 2, totalRequests, calendar);
@@ -25,5 +45,8 @@ public class Main {
 
         Statistics statistics = new Statistics(sources, smo);
         statistics.start();
+
+
+
     }
 }
