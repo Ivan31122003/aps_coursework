@@ -34,8 +34,8 @@ public class Main {
         inputThread.start();
 
         Integer totalRequests = 100;
-        Smo smo = new Smo(1, 2, totalRequests, calendar);
-        Sources sources = new Sources(2, smo.getRequestsDispatcher(), 3000, 1000, totalRequests, 3.45, 3.55, calendar);
+        Smo smo = new Smo(2, 2, totalRequests, calendar);
+        Sources sources = new Sources(2, smo.getRequestsDispatcher(), 2000, 1000, totalRequests, 3.45, 3.55, calendar);
 //        Sources sources = new Sources(8, smo.getRequestsDispatcher(), 35, 10, totalRequests, 0.02, 0.05);
         calendar.set(sources, smo);
 

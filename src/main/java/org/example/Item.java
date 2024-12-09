@@ -9,8 +9,9 @@ public class Item {
     private final Integer sourceId;
     private final Integer deviceId;
     private final Integer requestId;
+    private final Boolean isRejected;
 
-    public Item(Integer bufferSize, String title, Double time, Integer sourceId, Integer deviceId, Integer requestId) {
+    public Item(Integer bufferSize, String title, Double time, Integer sourceId, Integer deviceId, Integer requestId, Boolean isRejected) {
         this.bufferSize = bufferSize;
         this.title = title;
         id = idCounter++;
@@ -18,6 +19,7 @@ public class Item {
         this.sourceId = sourceId;
         this.deviceId = deviceId;
         this.requestId = requestId;
+        this.isRejected = isRejected;
     }
 
     public String getTitle() {
@@ -46,5 +48,9 @@ public class Item {
 
     public Integer getBufferSize() {
         return bufferSize;
+    }
+
+    public Boolean getIsRejected() {
+        return isRejected;
     }
 }

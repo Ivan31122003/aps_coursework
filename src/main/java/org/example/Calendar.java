@@ -22,7 +22,7 @@ public class Calendar {
     }
 
     public void setEventRequest(Request request) {
-        items.add(new Item(smo.getNumberOfElementsInQueue(), "Поступила заявка", (((double) request.getStartTime() - startTime) / 1000), request.getSourceId(), -1, request.getId()));
+        items.add(new Item(smo.getNumberOfElementsInQueue(), "Поступила заявка", (((double) request.getStartTime() - startTime) / 1000), request.getSourceId(), -1, request.getId(), request.getIsRejected()));
 //        Boolean status = smo.isDevicesIdle();
 //        System.out.println("Поступила заявка:");
 //        System.out.println("Событие №    Время     Источник №   Заявка №    Приборы");
@@ -33,7 +33,7 @@ public class Calendar {
 
     public void setEventDeviceRelease(Device device,  Long time) {
         Integer bufferSize = smo.getNumberOfElementsInQueue();
-        items.add(new Item(bufferSize, "Освободился прибор", (((double) time - startTime) / 1000), -1, device.getId(), device.getRequestId()));
+        items.add(new Item(bufferSize, "Освободился прибор", (((double) time - startTime) / 1000), -1, device.getId(), device.getRequestId(), false));
 //        System.out.println("Прибор освободился:");
 //        System.out.println("Событие №    Время     Прибор №     Заявка №");
 //        System.out.println("    " + idCounter++ + "        " + (((double) time - startTime) / 1000) + "        " + device.getId() + "           " + device.getRequestId());
@@ -44,9 +44,9 @@ public class Calendar {
     public void getStepInfo() {
         if (items.size() > index) {
             System.out.println(items.get(index).getTitle());
-            System.out.println("Событие №    Время     Источник №   Прибор №   Заявка №");
-            System.out.println("    " + items.get(index).getId() + "        " + items.get(index).getTime() + "         " + items.get(index).getSourceId() + "           " + items.get(index).getDeviceId() + "         " + items.get(index).getRequestId());
-            System.out.println("Заявок в буфере: " + items.get(index).getBufferSize());
+            System.out.println("Событие №    Время     Источник №   Прибор №   Заявка №     Отказ");
+            System.out.println("    " + items.get(index).getId() + "        " + items.get(index).getTime() + "         " + items.get(index).getSourceId() + "           " + items.get(index).getDeviceId() + "         " + items.get(index).getRequestId() + "         " + items.get(index).getIsRejected());
+//            System.out.println("Заявок в буфере: " + items.get(index).getBufferSize());
             System.out.println("-------------------------------------");
             ++index;
         } else {
